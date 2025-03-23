@@ -967,11 +967,12 @@ public class Format {
 	}
 	
 	private static Sound getSound(String soundName) {
-		if(Arrays.asList(Sound.values()).stream().map(Sound::toString).collect(Collectors.toList()).contains(soundName)) {
+		try {
 			return Sound.valueOf(soundName);
+		} catch (IllegalArgumentException exception) {
+			Bukkit.getConsoleSender().sendMessage(Format.FormatStringAll("&8[&eVentureChat&8]&c - Message sound invalid!"));
+			return getDefaultMessageSound();
 		}
-		Bukkit.getConsoleSender().sendMessage(Format.FormatStringAll("&8[&eVentureChat&8]&c - Message sound invalid!"));
-		return getDefaultMessageSound();
 	}
 	
 	private static Sound getDefaultMessageSound() {
